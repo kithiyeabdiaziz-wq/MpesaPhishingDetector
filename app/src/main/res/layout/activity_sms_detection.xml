@@ -44,7 +44,18 @@
             android:gravity="top|start"
             android:hint="Paste message here..."
             android:inputType="textMultiLine"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Character Counter -->
+        <TextView
+            android:id="@+id/tvCharCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 characters"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:layout_gravity="end"
+            android:layout_marginBottom="16dp"/>
 
         <Button
             android:id="@+id/btnAnalyzeSms"
@@ -54,6 +65,16 @@
             android:textColor="@color/text_primary"
             android:textStyle="bold"
             android:backgroundTint="@color/primary_dark"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Clear Button -->
+        <Button
+            android:id="@+id/btnClearSms"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="CLEAR"
+            android:textColor="@color/text_dark"
+            android:backgroundTint="#E2E8F0"
             android:layout_marginBottom="24dp"/>
 
         <ProgressBar

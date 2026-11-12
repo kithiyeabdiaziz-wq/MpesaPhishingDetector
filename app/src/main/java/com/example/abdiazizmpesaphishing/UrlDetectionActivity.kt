@@ -1,5 +1,7 @@
 package com.example.abdiazizmpesaphishing
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -19,10 +21,25 @@ class UrlDetectionActivity : AppCompatActivity() {
 
         val etUrlInput = findViewById<EditText>(R.id.etUrlInput)
         val btnAnalyzeUrl = findViewById<Button>(R.id.btnAnalyzeUrl)
+        val btnClearUrl = findViewById<Button>(R.id.btnClearUrl)
         val progressBar = findViewById<ProgressBar>(R.id.progressBarUrl)
+
+        // Clear Button Logic
+        btnClearUrl.setOnClickListener {
+            etUrlInput.text.clear()
+            Toast.makeText(this, "Cleared", Toast.LENGTH_SHORT).show()
+        }
 
         btnAnalyzeUrl.setOnClickListener {
             val urlText = etUrlInput.text.toString().trim()
+
+            // No Internet Check
+            val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetwork = cm.activeNetworkInfo
+            if (activeNetwork == null || !activeNetwork.isConnected) {
+                Toast.makeText(this, "No internet connection! Please check your data/Wi-Fi.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
             if (urlText.isEmpty()) {
                 Toast.makeText(this, "Please enter a URL first", Toast.LENGTH_SHORT).show()
@@ -34,9 +51,7 @@ class UrlDetectionActivity : AppCompatActivity() {
 
                 ApiClient.apiService.analyzeUrl(UrlRequest(urlText)).enqueue(object : Callback<UrlAnalysisResponse> {
                     override fun onResponse(call: Call<UrlAnalysisResponse>, response: Response<UrlAnalysisResponse>) {
-                        // SAFE CHECK
                         if (isFinishing || isDestroyed) return
-
                         progressBar.visibility = View.GONE
                         btnAnalyzeUrl.isEnabled = true
 
@@ -49,9 +64,7 @@ class UrlDetectionActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<UrlAnalysisResponse>, t: Throwable) {
-                        // SAFE CHECK
                         if (isFinishing || isDestroyed) return
-
                         progressBar.visibility = View.GONE
                         btnAnalyzeUrl.isEnabled = true
                         Toast.makeText(this@UrlDetectionActivity, "Network Error: ${t.message}", Toast.LENGTH_LONG).show()

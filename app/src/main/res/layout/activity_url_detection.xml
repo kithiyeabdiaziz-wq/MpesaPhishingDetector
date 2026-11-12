@@ -53,6 +53,16 @@
             android:textColor="@color/text_primary"
             android:textStyle="bold"
             android:backgroundTint="@color/primary_dark"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Clear Button -->
+        <Button
+            android:id="@+id/btnClearUrl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="CLEAR"
+            android:textColor="@color/text_dark"
+            android:backgroundTint="#E2E8F0"
             android:layout_marginBottom="24dp"/>
 
         <ProgressBar

@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
     // TODO: PASTE YOUR LAPTOP IP HERE! Keep the http:// and the :5000/
-    private const val BASE_URL = "http://192.168.3.27:5000/"
+    private const val BASE_URL = "https://mpesa-shield-api.onrender.com"
 
     val apiService: ApiService by lazy {
         Retrofit.Builder()

@@ -1,10 +1,15 @@
 package com.example.abdiazizmpesaphishing
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,10 +24,35 @@ class SmsDetectionActivity : AppCompatActivity() {
 
         val etSmsInput = findViewById<EditText>(R.id.etSmsInput)
         val btnAnalyzeSms = findViewById<Button>(R.id.btnAnalyzeSms)
+        val btnClearSms = findViewById<Button>(R.id.btnClearSms)
         val progressBar = findViewById<ProgressBar>(R.id.progressBarSms)
+        val tvCharCount = findViewById<TextView>(R.id.tvCharCount)
+
+        // Character Counter Logic
+        etSmsInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                tvCharCount.text = "${s?.length ?: 0} characters"
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        // Clear Button Logic
+        btnClearSms.setOnClickListener {
+            etSmsInput.text.clear()
+            Toast.makeText(this, "Cleared", Toast.LENGTH_SHORT).show()
+        }
 
         btnAnalyzeSms.setOnClickListener {
             val smsText = etSmsInput.text.toString().trim()
+
+            // No Internet Check
+            val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetwork = cm.activeNetworkInfo
+            if (activeNetwork == null || !activeNetwork.isConnected) {
+                Toast.makeText(this, "No internet connection! Please check your data/Wi-Fi.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
             if (smsText.isEmpty()) {
                 Toast.makeText(this, "Please paste a message first", Toast.LENGTH_SHORT).show()
@@ -32,9 +62,7 @@ class SmsDetectionActivity : AppCompatActivity() {
 
                 ApiClient.apiService.analyzeSms(SmsRequest(smsText)).enqueue(object : Callback<AnalysisResponse> {
                     override fun onResponse(call: Call<AnalysisResponse>, response: Response<AnalysisResponse>) {
-                        // SAFE CHECK: Ensure screen is still open before updating UI
                         if (isFinishing || isDestroyed) return
-
                         progressBar.visibility = View.GONE
                         btnAnalyzeSms.isEnabled = true
 
@@ -47,13 +75,9 @@ class SmsDetectionActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<AnalysisResponse>, t: Throwable) {
-                        // SAFE CHECK: Ensure screen is still open before updating UI
                         if (isFinishing || isDestroyed) return
-
                         progressBar.visibility = View.GONE
                         btnAnalyzeSms.isEnabled = true
-
-                        // Show the EXACT error so we know why it failed
                         Toast.makeText(this@SmsDetectionActivity, "Network Error: ${t.message}", Toast.LENGTH_LONG).show()
                     }
                 })
