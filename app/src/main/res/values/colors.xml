@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand Colors -->
+    <color name="primary_dark">#0B192C</color> <!-- Deep Navy -->
+    <color name="primary_blue">#1A365D</color>
+    <color name="accent_teal">#00A8FF</color> <!-- Bright Cyan -->
+
+    <!-- Status Colors -->
+    <color name="status_safe">#2ECC71</color> <!-- Green -->
+    <color name="status_suspicious">#F39C12</color> <!-- Orange -->
+    <color name="status_fraudulent">#E74C3C</color> <!-- Red -->
+
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#A0AEC0</color>
+    <color name="text_dark">#1A202C</color>
+
+    <!-- Backgrounds -->
+    <color name="bg_light">#F7FAFC</color>
+    <color name="bg_card">#FFFFFF</color>
+</resources>

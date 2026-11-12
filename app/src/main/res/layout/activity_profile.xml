@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:background="@color/primary_dark"
+            android:padding="24dp"
+            android:src="@android:drawable/ic_menu_myplaces" />
+
+        <TextView
+            android:id="@+id/tvProfileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="User Name"
+            android:textColor="@color/primary_dark"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvProfileEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="user@email.com"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- Settings Button -->
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="App Settings"
+            android:backgroundTint="@color/accent_teal"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Logout Button -->
+        <Button
+            android:id="@+id/btnLogoutProfile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="LOGOUT"
+            android:backgroundTint="@color/status_fraudulent"
+            android:textColor="@color/text_primary" />
+
+    </LinearLayout>
+</ScrollView>
